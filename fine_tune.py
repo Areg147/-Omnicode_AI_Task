@@ -20,9 +20,9 @@ class GPT(tf.keras.Model):
 
 csv_data_path = r"C:\Users\Dell\Desktop\Shekspir\data\Shakespeare_data.csv" #my example
 txt_data_path = r"C:\Users\Dell\Desktop\Shekspir\data\alllines.txt" #my example
-apprx_N_unique_words_for_train = 500 #my example
-batch_size = 5 #my example
-max_context_window = 6 #my example
+apprx_N_unique_words_for_train = 100000 #my example
+batch_size = 45 #my example
+max_context_window = 35 #my example
 
 
 pr = Preprocessor(csv_data_path, txt_data_path,apprx_N_unique_words_for_train,
