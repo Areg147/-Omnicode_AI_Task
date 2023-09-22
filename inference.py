@@ -36,6 +36,8 @@ def generate(prompt, model):
             )
     print("\n\n\n")
     generated_text = tokenizer_gpt.decode(output[0])
+    print("GENERATED TEXT BELOW-!")
+    print("\n\n")
     printer(generated_text)
     print("\n")
 
