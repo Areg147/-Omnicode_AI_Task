@@ -1,4 +1,5 @@
 from transformers import TFGPT2LMHeadModel
+from preprocessor import Preprocessor
 import tensorflow as tf
 
 class GPT(tf.keras.Model):
