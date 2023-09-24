@@ -57,11 +57,13 @@ txt_data_path = r"C:\Users\Dell\Desktop\Shekspir\data\alllines.txt" #my example
 apprx_N_unique_words_for_train = 100000 #my example
 batch_size = 32 #my example
 max_context_window = 35 #my example
+train_size = 50000 #my example
+val_size = 500 #my example
 
 
 pr = Preprocessor(csv_data_path, txt_data_path,apprx_N_unique_words_for_train,
                   batch_size, max_context_window) 
-data_for_training = pr.fit_transform()
+data_for_training,validation_data = pr.fit_transform()
 
 # # Creating the Model
 model = GPT()
@@ -74,4 +76,4 @@ model.compile(optimizer=optimizer, loss=tf.keras.losses.SparseCategoricalCrossen
 
 #Start Training
 epochs = 2
-model.fit(data_for_training, epochs=epochs)
+model.fit(data_for_training,validation_data=validation_data, epochs=epochs)
