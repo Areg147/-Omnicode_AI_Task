@@ -166,4 +166,8 @@ class Preprocessor:
 
         dataset_inputs = dataset_inputs.padded_batch(self.batch_size,(self.max_context_window-2,),1)
         dataset_targets = dataset_targets.padded_batch(self.batch_size,(self.max_context_window-2,),1)
-        return tf.data.Dataset.zip((dataset_inputs,dataset_targets))
+
+        final = tf.data.Dataset.zip((dataset_inputs,dataset_targets))
+        train_data = final.take(self.train_size)
+        validation_data = final.skip(self.train_size).take(self.val_size = val_size)
+        return train_data,validation_data
