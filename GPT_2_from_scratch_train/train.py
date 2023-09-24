@@ -1,5 +1,4 @@
 from transformers import  GPT2Config,TFGPT2LMHeadModel
-from preprocessor import Preprocessor
 import tensorflow as tf
 
 class GPT(tf.keras.Model):
@@ -52,8 +51,8 @@ class PerplexityMetric(tf.keras.metrics.Metric):
 ## Data Loading and Preparation
 ## defining all variables for preprocessor
 
-csv_data_path = r"C:\Users\Dell\Desktop\Shekspir\data\Shakespeare_data.csv" #my example
-txt_data_path = r"C:\Users\Dell\Desktop\Shekspir\data\alllines.txt" #my example
+csv_data_path = "/kaggle/input/sesesese/Shakespeare_data.csv" #my example
+txt_data_path = "/kaggle/input/sesesese/alllines.txt" #my example
 apprx_N_unique_words_for_train = 100000 #my example
 batch_size = 32 #my example
 max_context_window = 35 #my example
