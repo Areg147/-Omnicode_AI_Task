@@ -44,7 +44,7 @@ class PerplexityMetric(tf.keras.metrics.Metric):
         self.perplexity.assign(0.)
     
 
-txt_data_path = "/kaggle/input/sssssssssssssss/alllines.txt" 
+txt_data_path = "/kaggle/input/data/alllines.txt" 
 batch_size = 16 #my example
 context_window = 64 #my example
 train_size = 50000
