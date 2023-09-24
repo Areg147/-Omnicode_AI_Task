@@ -1,5 +1,4 @@
 from transformers import TFGPT2LMHeadModel
-from preprocessor import Preprocessor
 import tensorflow as tf
 
 class GPT(tf.keras.Model):
@@ -45,13 +44,15 @@ class PerplexityMetric(tf.keras.metrics.Metric):
         self.perplexity.assign(0.)
     
 
-txt_data_path = r"C:\Users\Dell\Desktop\Shekspir\data\alllines.txt" #my example
+txt_data_path = "/kaggle/input/sssssssssssssss/alllines.txt" 
 batch_size = 16 #my example
 context_window = 64 #my example
+train_size = 50000
+val_size = 500
 
 
 pr = Preprocessor(txt_data_path,batch_size,context_window) 
-data_for_training = pr.fit_transform()
+data_for_training,validation_data = pr.fit_transform()
 
 # # Creating the Model
 model = GPT()
@@ -63,4 +64,4 @@ model.compile(optimizer=optimizer, loss=loss, metrics=[metric])
 
 
 epochs = 2
-model.fit(data_for_training, epochs=epochs)
+model.fit(data_for_training,validation_data=validation_data, epochs=epochs)
