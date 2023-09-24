@@ -57,7 +57,7 @@ data_for_training = pr.fit_transform()
 model = GPT()
 optimizer = tf.keras.optimizers.Adam()
 loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
-metric = tf.keras.metrics.SparseCategoricalAccuracy('accuracy')
+metric = PerplexityMetric()
 
 model.compile(optimizer=optimizer, loss=loss, metrics=[metric])
 
