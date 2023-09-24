@@ -27,7 +27,7 @@ class Preprocessor:
         tokenizer (Tokenizer): Tokenizer for text processing.
     """
 
-    def __init__(self,data_path_csv,text_file_path,apprx_N_unique_words_for_train,batch_size,max_context_window):
+    def __init__(self,data_path_csv,text_file_path,apprx_N_unique_words_for_train,batch_size,max_context_window,train_size,val_size):
 
         dataset = pd.read_csv(data_path_csv)
         dataset = dataset.dropna(subset = ['Player'])
@@ -39,6 +39,8 @@ class Preprocessor:
         self.batch_size = batch_size
         self.max_context_window = max_context_window
         self.text_file_path = text_file_path
+        self.train_size =train_size
+        self.val_size = val_size
 
          # Initialize the tokenizer with ByteLevel pre-tokenizer and decoder
         self.tokenizer = Tokenizer(BPE())
