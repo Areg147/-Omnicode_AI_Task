@@ -12,7 +12,7 @@ from transformers import GPT2TokenizerFast
 
 class Preprocessor:
 
-    def __init__(self,text_file_path,batch_size,context_window):
+    def __init__(self,text_file_path,batch_size,context_window,train_size,val_size):
 
         with open(text_file_path) as flie:
             data = flie.readlines()
@@ -27,6 +27,8 @@ class Preprocessor:
         self.text_file_path = text_file_path
         self.batch_size = batch_size
         self.context_window = context_window
+        self.train_size =train_size
+        self.val_size = val_size
 
         self.tokenizer = Tokenizer(BPE())
         self.tokenizer.pre_tokenizer = ByteLevel()
@@ -101,4 +103,8 @@ class Preprocessor:
         dataset_inputs = dataset_inputs.batch(self.batch_size,drop_remainder=True)
         dataset_targets = dataset_targets.batch(self.batch_size,drop_remainder=True)
         
-        return tf.data.Dataset.zip((dataset_inputs,dataset_targets))
+        final = tf.data.Dataset.zip((dataset_inputs,dataset_targets))
+        train_data = final.take(self.train_size)
+        validation_data = final.skip(self.train_size).take(self.val_size = val_size)
+        
+        return train_data,validation_data
