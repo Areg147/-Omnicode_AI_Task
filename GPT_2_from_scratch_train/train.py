@@ -62,7 +62,7 @@ val_size = 500 #my example
 
 
 pr = Preprocessor(csv_data_path, txt_data_path,apprx_N_unique_words_for_train,
-                  batch_size, max_context_window) 
+                  batch_size, max_context_window,train_size,val_size) 
 data_for_training,validation_data = pr.fit_transform()
 
 # # Creating the Model
