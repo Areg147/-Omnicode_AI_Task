@@ -171,5 +171,5 @@ class Preprocessor:
 
         final = tf.data.Dataset.zip((dataset_inputs,dataset_targets))
         train_data = final.take(self.train_size)
-        validation_data = final.skip(self.train_size).take(self.val_size = val_size)
+        validation_data = final.skip(self.train_size).take(self.val_size)
         return train_data,validation_data
