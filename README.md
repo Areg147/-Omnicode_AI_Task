@@ -3,7 +3,7 @@ GPT_2_from_scratch model and tokenizer https://drive.google.com/drive/folders/1v
 GPT_2_pretrained model and tokenizer  https://drive.google.com/drive/folders/1UKuPu1WKfPifV82Tuz1NAI7-DqTxgxgM?usp=drive_link
 
 
-For this task, I have chosen the GPT-2 architecture because it is a unidirectional (left to right) language model, which is suitable for text generation. Since the task is to create a language model, there is no need to modify the model's architecture. Instead, we can train a tokenizer suitable for our dataset and fine-tune the pretrained model.
+For this task, I have chosen the GPT-2 architecture because it is a unidirectional (left to right) language model, which is suitable for text generation. Since the task is to create a language model, there is no need to modify the model's architecture. Instead, we can train a tokenizer suitable for our dataset and fine-tune the pretrained model. Also, I want to mention that for fine-tuning, I added some data, and this new version of data is added to the 'finetune' folder.
 
 In addition to fine-tuning, I have also decided to train the GPT-2 model from scratch. For measuring model performance, I have decided to use perplexity, but in most cases, language models are evaluated in downstream tasks such as GLUE tasks.
 
