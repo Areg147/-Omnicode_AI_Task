@@ -1,68 +1,28 @@
-from transformers import TFGPT2LMHeadModel
-from preprocessor import Preprocessor
-import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 
-class GPT(tf.keras.Model):
-    def __init__(self):
-        super().__init__()
+def plotter(array, ranges, image, dictionary, colors, labels, FRAME):
+    fig, axes = plt.subplots(1, 4, figsize=(28, 7))
+    fig.suptitle(f'Frame {FRAME}', fontsize=20)
 
-        self.backbone = TFGPT2LMHeadModel.from_pretrained("gpt2")
-    
-    def call(self,input_):
-        return self.backbone(input_)["logits"]
-    
-K = tf.keras.backend 
+    # Histogram for temperature
+    array = array[array >= 50]
+    n, bins, patches = axes[0].hist(array[array != 0], bins=np.arange(min(array), max(array) + 1), color='blue', alpha=0.7)
+    axes[0].set_xlim(0, 400)
+    axes[0].set_ylim(0, 2000)
+    axes[0].set_xlabel("temperature in celsius")
+    axes[0].set_ylabel("frequency")
+    axes[0].set_title("Stick Temperature Distribution")
 
-class PerplexityMetric(tf.keras.metrics.Metric):
+    # Adding custom legend for specified ranges
+    legend_elements = [
+        Patch(facecolor='red', edgecolor='r', label='50-100'),
+        Patch(facecolor='blue', edgecolor='b', label='100-150')
+    ]
+    axes[0].legend(handles=legend_elements, loc='upper left', title="Temperature Ranges")
 
-    def __init__(self, name='perplexity', **kwargs):
-        super(PerplexityMetric, self).__init__(name=name, **kwargs)
-        self.cross_entropy = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True, reduction='none')
-        self.perplexity = self.add_weight(name='tp', initializer='zeros')
-
-    def _calculate_perplexity(self, real, pred):
-        mask = tf.math.logical_not(tf.math.equal(real, 0))
-        loss_ = self.cross_entropy(real, pred)
-        mask = tf.cast(mask, dtype=loss_.dtype)
-        loss_ *= mask
-        step1 = K.mean(loss_, axis=-1)
-        step2 = K.exp(step1)
-        perplexity = K.mean(step2)
-
-        return perplexity 
-
-
-    def update_state(self, y_true, y_pred, sample_weight=None):
-        
-        perplexity = self._calculate_perplexity(y_true, y_pred)
-
-        self.perplexity.assign_add(perplexity)
-        
-    def result(self):
-        return self.perplexity
-
-    def reset_states(self):
-        self.perplexity.assign(0.)
-    
-
-txt_data_path = "/kaggle/input/data/alllines.txt" 
-batch_size = 16 #my example
-context_window = 64 #my example
-train_size = 50000
-val_size = 500
-
-
-pr = Preprocessor(txt_data_path,batch_size,context_window,train_size,val_size) 
-data_for_training,validation_data = pr.fit_transform()
-
-# # Creating the Model
-model = GPT()
-optimizer = tf.keras.optimizers.Adam()
-loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
-metric = PerplexityMetric()
-
-model.compile(optimizer=optimizer, loss=loss, metrics=[metric])
-
-
-epochs = 2
-model.fit(data_for_training,validation_data=validation_data, epochs=epochs)
+# Example usage
+array = np.random.randint(50, 200, size=1000)  # Random data for demonstration
+plotter(array, None, None, None, None, None, 1)
+plt.show()
