@@ -4,3 +4,6 @@
     axes[3].set_ylabel("Percentage")
     axes[3].set_title("Group Percentage")
     axes[3].set_ylim(0,1)
+
+axes[3].set_xticklabels([f"{key[0]}-{key[1]}" for key in keys], rotation=20)
+
